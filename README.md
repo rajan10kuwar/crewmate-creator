@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Web Development Project 7 - *Crewmate Creator*
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Submitted by: **Rajan Kuwar**
 
-## Available Scripts
+This web app: **Crewmate Creator is a fun application that allows users to create, manage, and view a collection of crewmates with customizable attributes like name, speed, and color. Users can add new crewmates, update existing ones, delete them, view detailed information, and see summary statistics about their crew.**
 
-In the project directory, you can run:
+Time spent: **12** hours spent in total
 
-### `npm start`
+## Required Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The following **required** functionality is completed:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+- [X] **The web app contains a page that features a create form to add a new crewmate**
+  - Users can name the crewmate
+  - Users can set the crewmate’s attributes by clicking on one of several values
+- [X] **The web app includes a summary page of all the user’s added crewmatese**
+  -  The web app contains a summary page dedicated to displaying all the crewmates the user has made so far
+  -  The summary page is sorted by creation date such that the most recently created crewmates appear at the top
+- [X] **A previously created crewmate can be updated from the list of crewmates in the summary page**
+  - Each crewmate has an edit button that will take users to an update form for the relevant crewmate
+  - Users can see the current attributes of their crewmate on the update form
+  - After editing the crewmate's attribute values using the form, the user can immediately see those changes reflected in the update form and on the summary page 
+- [X] **A previously created crewmate can be deleted from the crewmate list**
+  - Using the edit form detailed in the previous _crewmates can be updated_ feature, there is a button that allows users to delete that crewmate
+  - After deleting a crewmate, the crewmate should no longer be visible in the summary page
+  - [X] **Each crewmate has a direct, unique URL link to an info page about them**
+    - Clicking on a crewmate in the summary page navigates to a detail page for that crewmate
+    - The detail page contains extra information about the crewmate not included in the summary page
+    - Users can navigate to to the edit form from the detail page
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The following **optional** features are implemented:
 
-### `npm run build`
+- [ ] A crewmate can be given a category upon creation which restricts their attribute value options
+  - e.g., a Dungeons and Dragons class or a development team role (project manager, product owner, etc.)
+  - User can choose a `category` option to describe their crewmate before any attributes are specified
+  - Based on the category value, users are allowed to access only a subset of the possible attributes
+- [X] A section of the summary page, displays summary statistics about a user’s crew on their crew page
+  - e.g., the percent of members with a certain attribute 
+- [ ] The summary page displays a custom “success” metric about a user’s crew which changes the look of the crewmate list
+  - e.g., a pirate crew’s predicted success at commandeering a new galley
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The following **additional** features are implemented:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [ ] List anything else that you added to improve the site's functionality!
+* [X] Centered layout for the gallery page to improve visual appeal
 
-### `npm run eject`
+* [X] Responsive design with a sidebar navigation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ * [X] Real-time updates with Supabase integration for data persistence
+## Video Walkthrough
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Here's a walkthrough of implemented user stories:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<!-- Replace this with whatever GIF tool you used! -->
+GIF created with ...  
+<!-- Recommended tools:
+[Kap](https://getkap.co/) for macOS
+[ScreenToGif](https://www.screentogif.com/) for Windows
+[peek](https://github.com/phw/peek) for Linux. -->
 
-## Learn More
+## Notes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Describe any challenges encountered while building the app.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Integrating Supabase for real-time data storage required troubleshooting environment variable setup.
+- Centering the gallery content required careful adjustment of CSS flexbox properties to account for the sidebar.
+- Ensuring smooth state management for edit, delete, and detail pages took iterative testing.
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    Copyright [2025] [Rajan Kuwar]
 
-### Analyzing the Bundle Size
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        http://www.apache.org/licenses/LICENSE-2.0
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
