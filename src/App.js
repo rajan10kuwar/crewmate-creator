@@ -101,6 +101,37 @@ function App() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!editCrewmate) {
+      setMessage('No crewmate selected for deletion.');
+      return;
+    }
+    if (window.confirm(`Are you sure you want to delete ${editCrewmate.name}?`)) {
+      setMessage('Deleting crewmate...');
+      try {
+        const { error } = await supabase
+          .from('crewmates')
+          .delete()
+          .eq('id', editCrewmate.id);
+        if (error) {
+          console.error('Delete error:', error);
+          setMessage(`Error deleting crewmate: ${error.message}`);
+        } else {
+          console.log('Crewmate deleted:', editCrewmate.id);
+          setMessage('Crewmate deleted successfully!');
+          setEditCrewmate(null);
+          setName('');
+          setSpeed('');
+          setColor('');
+          if (currentPage === 'gallery') fetchCrewmates();
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        setMessage('Unexpected error occurred.');
+      }
+    }
+  };
+
   const startEdit = (crewmate) => {
     setEditCrewmate(crewmate);
     setName(crewmate.name);
@@ -168,6 +199,11 @@ function App() {
               {editCrewmate && (
                 <button type="button" onClick={() => { setEditCrewmate(null); setName(''); setSpeed(''); setColor(''); }} className="cancel-btn">
                   Cancel
+                </button>
+              )}
+              {editCrewmate && (
+                <button type="button" onClick={handleDelete} className="delete-btn">
+                  Delete Crewmate
                 </button>
               )}
             </form>
