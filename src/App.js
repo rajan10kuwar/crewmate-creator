@@ -13,6 +13,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [message, setMessage] = useState('');
   const [editCrewmate, setEditCrewmate] = useState(null); // State for editing a crewmate
+  const [selectedCrewmate, setSelectedCrewmate] = useState(null); // State for detail page
 
   useEffect(() => {
     console.log('Current page:', currentPage);
@@ -140,12 +141,17 @@ function App() {
     setCurrentPage('create'); // Switch to create page for editing
   };
 
+  const showDetail = (crewmate) => {
+    setSelectedCrewmate(crewmate);
+    setCurrentPage('detail');
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
-        <a href="#home" onClick={() => setCurrentPage('home')}>Home</a>
-        <a href="#create" onClick={() => { setCurrentPage('create'); setEditCrewmate(null); }}>Create a Crewmate!</a>
-        <a href="#gallery" onClick={() => setCurrentPage('gallery')}>Crewmate Gallery</a>
+        <a href="#home" onClick={() => { setCurrentPage('home'); setSelectedCrewmate(null); }}>Home</a>
+        <a href="#create" onClick={() => { setCurrentPage('create'); setEditCrewmate(null); setSelectedCrewmate(null); }}>Create a Crewmate!</a>
+        <a href="#gallery" onClick={() => { setCurrentPage('gallery'); setSelectedCrewmate(null); }}>Crewmate Gallery</a>
       </div>
       <div className="content">
         {currentPage === 'home' && (
@@ -156,13 +162,13 @@ function App() {
               {new Date().toLocaleDateString('en-US', { timeZone: 'America/New_York' })}.<br />
               Create your own crewmates and send them into space!
             </p>
-            <img src="/crewmates.png" alt="Crewmates" className="header-img" />
+            <img src="/crewmate.jpg" alt="Crewmates" className="header-img" />
           </div>
         )}
         {currentPage === 'create' && (
           <>
             <h1>{editCrewmate ? 'Edit Crewmate' : 'Create a New Crewmate'}</h1>
-            <img src="/crewmates.png" alt="Crewmates" className="header-img" />
+            <img src="/crewmate.jpg" alt="Crewmates" className="header-img" />
             <form onSubmit={editCrewmate ? handleUpdate : handleSubmit} className="create-form">
               <div className="form-group">
                 <input
@@ -221,20 +227,35 @@ function App() {
             ) : (
               <div className="gallery">
                 {crewmates.map((crewmate) => (
-                  <div key={crewmate.id} className="crewmate-card" style={{ borderColor: crewmate.color }}>
-                    <img src="/crewmate.png" alt={crewmate.name} className="crewmate-img" />
+                  <div key={crewmate.id} className="crewmate-card" style={{ borderColor: crewmate.color }} onClick={() => showDetail(crewmate)}>
+                    <img src="/single.png" alt={crewmate.name} className="crewmate-img" />
                     <div className="card-content">
                       <h3>{crewmate.name}</h3>
                       <p>Speed: {crewmate.speed} mph</p>
                       <p>Color: {crewmate.color}</p>
                       <p>Created: {new Date(crewmate.created_at).toLocaleDateString()}</p>
-                      <button onClick={() => startEdit(crewmate)} className="edit-btn">Edit</button>
                     </div>
                   </div>
                 ))}
               </div>
             )}
           </>
+        )}
+        {currentPage === 'detail' && selectedCrewmate && (
+          <div className="detail-page">
+            <h1>Crewmate Details: {selectedCrewmate.name}</h1>
+            <img src="/crewmate.jpg" alt={selectedCrewmate.name} className="header-img" />
+            <div className="detail-content">
+              <p><strong>Speed:</strong> {selectedCrewmate.speed} mph</p>
+              <p><strong>Color:</strong> {selectedCrewmate.color}</p>
+              <p><strong>Created:</strong> {new Date(selectedCrewmate.created_at).toLocaleDateString()}</p>
+              <p><strong>Mission Status:</strong> Active in Orbit</p> {/* Extra info */}
+              <p><strong>Distance Traveled:</strong> {selectedCrewmate.speed * 100} miles</p> {/* Extra info */}
+              <p><strong>Last Contact:</strong> {new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}</p> {/* Extra info */}
+              <button onClick={() => startEdit(selectedCrewmate)} className="edit-btn">Edit Crewmate</button>
+              <button onClick={() => setCurrentPage('gallery')} className="back-btn">Back to Gallery</button>
+            </div>
+          </div>
         )}
       </div>
     </div>

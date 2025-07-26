@@ -60,7 +60,7 @@ h1 {
   margin-bottom: 30px;
 }
 
-.home-page, .create-form, .empty-gallery, .gallery {
+.home-page, .create-form, .empty-gallery, .gallery, .detail-page {
   background: #14273a;
   padding: 35px;
   border-radius: 25px;
@@ -178,6 +178,24 @@ button:hover {
   box-shadow: 0 4px 12px rgba(255, 68, 68, 0.5);
 }
 
+.back-btn {
+  margin-top: 15px;
+  background: #6666ff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #8888ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 102, 255, 0.5);
+}
+
 .message {
   margin-top: 20px;
   padding: 15px 25px;
@@ -229,6 +247,7 @@ button:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
   border-left: 7px solid;
   transition: all 0.3s ease;
+  cursor: pointer; /* Indicate clickable */
 }
 
 .crewmate-card:hover {
@@ -257,4 +276,20 @@ button:hover {
   margin: 8px 0;
   color: #a0c0d0;
   font-size: 1.2em;
+}
+
+.detail-content {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.detail-content p {
+  margin: 10px 0;
+  font-size: 1.2em;
+  color: #b0c0d0;
+}
+
+.detail-content strong {
+  color: #00eaff;
 }
