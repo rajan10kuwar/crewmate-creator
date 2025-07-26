@@ -146,6 +146,19 @@ function App() {
     setCurrentPage('detail');
   };
 
+  // Calculate color distribution percentages
+  const getColorStats = () => {
+    if (crewmates.length === 0) return {};
+    const colorCount = {};
+    crewmates.forEach(crewmate => {
+      colorCount[crewmate.color] = (colorCount[crewmate.color] || 0) + 1;
+    });
+    const total = crewmates.length;
+    return Object.fromEntries(
+      Object.entries(colorCount).map(([color, count]) => [color, ((count / total) * 100).toFixed(1)])
+    );
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -225,19 +238,29 @@ function App() {
                 <button onClick={() => setCurrentPage('create')}>Create One Now!</button>
               </div>
             ) : (
-              <div className="gallery">
-                {crewmates.map((crewmate) => (
-                  <div key={crewmate.id} className="crewmate-card" style={{ borderColor: crewmate.color }} onClick={() => showDetail(crewmate)}>
-                    <img src="/single.png" alt={crewmate.name} className="crewmate-img" />
-                    <div className="card-content">
-                      <h3>{crewmate.name}</h3>
-                      <p>Speed: {crewmate.speed} mph</p>
-                      <p>Color: {crewmate.color}</p>
-                      <p>Created: {new Date(crewmate.created_at).toLocaleDateString()}</p>
+              <>
+                <div className="gallery">
+                  {crewmates.map((crewmate) => (
+                    <div key={crewmate.id} className="crewmate-card" style={{ borderColor: crewmate.color }} onClick={() => showDetail(crewmate)}>
+                      <img src="/single.png" alt={crewmate.name} className="crewmate-img" />
+                      <div className="card-content">
+                        <h3>{crewmate.name}</h3>
+                        <p>Speed: {crewmate.speed} mph</p>
+                        <p>Color: {crewmate.color}</p>
+                        <p>Created: {new Date(crewmate.created_at).toLocaleDateString()}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                <div className="stats-section">
+                  <h2>Crew Statistics</h2>
+                  <p>Total Crewmates: {crewmates.length}</p>
+                  <h3>Color Distribution (%):</h3>
+                  {Object.entries(getColorStats()).map(([color, percentage]) => (
+                    <p key={color}> {color}: {percentage}%</p>
+                  ))}
+                </div>
+              </>
             )}
           </>
         )}
@@ -249,9 +272,9 @@ function App() {
               <p><strong>Speed:</strong> {selectedCrewmate.speed} mph</p>
               <p><strong>Color:</strong> {selectedCrewmate.color}</p>
               <p><strong>Created:</strong> {new Date(selectedCrewmate.created_at).toLocaleDateString()}</p>
-              <p><strong>Mission Status:</strong> Active in Orbit</p> {/* Extra info */}
-              <p><strong>Distance Traveled:</strong> {selectedCrewmate.speed * 100} miles</p> {/* Extra info */}
-              <p><strong>Last Contact:</strong> {new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}</p> {/* Extra info */}
+              <p><strong>Mission Status:</strong> Active in Orbit</p>
+              <p><strong>Distance Traveled:</strong> {selectedCrewmate.speed * 100} miles</p>
+              <p><strong>Last Contact:</strong> {new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
               <button onClick={() => startEdit(selectedCrewmate)} className="edit-btn">Edit Crewmate</button>
               <button onClick={() => setCurrentPage('gallery')} className="back-btn">Back to Gallery</button>
             </div>
