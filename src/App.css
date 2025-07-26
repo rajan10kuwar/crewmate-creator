@@ -130,6 +130,36 @@ button:hover {
   box-shadow: 0 8px 20px rgba(0, 234, 255, 0.6);
 }
 
+.cancel-btn {
+  margin-top: 10px;
+  background: #ff6666;
+  padding: 12px 30px;
+}
+
+.cancel-btn:hover {
+  background: #ff8888;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 102, 0.5);
+}
+
+.edit-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #00cc99;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: #00e6b8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 204, 153, 0.5);
+}
+
 .message {
   margin-top: 20px;
   padding: 15px 25px;
@@ -165,11 +195,11 @@ button:hover {
 }
 
 .gallery {
-  display: flex; /* Changed from grid to flex */
-  flex-direction: column; /* Stack vertically */
+  display: flex;
+  flex-direction: column;
   gap: 30px;
   margin-top: 30px;
-  max-width: 600px; /* Optional: constrain width */
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -196,7 +226,7 @@ button:hover {
 }
 
 .card-content {
-  text-align: center;
+  text-align: left;
 }
 
 .card-content h3 {

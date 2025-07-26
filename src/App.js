@@ -12,6 +12,7 @@ function App() {
   const [crewmates, setCrewmates] = useState([]);
   const [currentPage, setCurrentPage] = useState('home');
   const [message, setMessage] = useState('');
+  const [editCrewmate, setEditCrewmate] = useState(null); // State for editing a crewmate
 
   useEffect(() => {
     console.log('Current page:', currentPage);
@@ -70,11 +71,49 @@ function App() {
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!editCrewmate || !color) {
+      setMessage('Please select a color!');
+      return;
+    }
+    setMessage('Updating crewmate...');
+    try {
+      const { data, error } = await supabase
+        .from('crewmates')
+        .update({ name, speed, color, created_at: new Date().toISOString() })
+        .eq('id', editCrewmate.id);
+      if (error) {
+        console.error('Update error:', error);
+        setMessage(`Error updating crewmate: ${error.message}`);
+      } else {
+        console.log('Crewmate updated:', data);
+        setMessage('Crewmate updated successfully!');
+        setEditCrewmate(null);
+        setName('');
+        setSpeed('');
+        setColor('');
+        if (currentPage === 'gallery') fetchCrewmates();
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      setMessage('Unexpected error occurred.');
+    }
+  };
+
+  const startEdit = (crewmate) => {
+    setEditCrewmate(crewmate);
+    setName(crewmate.name);
+    setSpeed(crewmate.speed);
+    setColor(crewmate.color);
+    setCurrentPage('create'); // Switch to create page for editing
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
         <a href="#home" onClick={() => setCurrentPage('home')}>Home</a>
-        <a href="#create" onClick={() => setCurrentPage('create')}>Create a Crewmate!</a>
+        <a href="#create" onClick={() => { setCurrentPage('create'); setEditCrewmate(null); }}>Create a Crewmate!</a>
         <a href="#gallery" onClick={() => setCurrentPage('gallery')}>Crewmate Gallery</a>
       </div>
       <div className="content">
@@ -91,9 +130,9 @@ function App() {
         )}
         {currentPage === 'create' && (
           <>
-            <h1>Create a New Crewmate</h1>
-            <img src="/crewmate.jpg" alt="Crewmates" className="header-img" />
-            <form onSubmit={handleSubmit} className="create-form">
+            <h1>{editCrewmate ? 'Edit Crewmate' : 'Create a New Crewmate'}</h1>
+            <img src="/crewmates.png" alt="Crewmates" className="header-img" />
+            <form onSubmit={editCrewmate ? handleUpdate : handleSubmit} className="create-form">
               <div className="form-group">
                 <input
                   type="text"
@@ -125,7 +164,12 @@ function App() {
                   <option value="Rainbow">Rainbow</option>
                 </select>
               </div>
-              <button type="submit">Create Crewmate</button>
+              <button type="submit">{editCrewmate ? 'Update Crewmate' : 'Create Crewmate'}</button>
+              {editCrewmate && (
+                <button type="button" onClick={() => { setEditCrewmate(null); setName(''); setSpeed(''); setColor(''); }} className="cancel-btn">
+                  Cancel
+                </button>
+              )}
             </form>
             {message && <p className={`message ${message.includes('successfully') ? 'success' : ''}`}>{message}</p>}
           </>
@@ -142,12 +186,13 @@ function App() {
               <div className="gallery">
                 {crewmates.map((crewmate) => (
                   <div key={crewmate.id} className="crewmate-card" style={{ borderColor: crewmate.color }}>
-                    <img src="/crewmate.jpg" alt={crewmate.name} className="crewmate-img" />
+                    <img src="/crewmate.png" alt={crewmate.name} className="crewmate-img" />
                     <div className="card-content">
                       <h3>{crewmate.name}</h3>
                       <p>Speed: {crewmate.speed} mph</p>
                       <p>Color: {crewmate.color}</p>
                       <p>Created: {new Date(crewmate.created_at).toLocaleDateString()}</p>
+                      <button onClick={() => startEdit(crewmate)} className="edit-btn">Edit</button>
                     </div>
                   </div>
                 ))}
